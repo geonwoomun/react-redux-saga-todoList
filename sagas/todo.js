@@ -41,11 +41,12 @@ function* watchUpdate() {
     yield takeLatest(UPDATE_TODO_REQUEST, updateTodo)
 }
 
-function* deleteTodo() {
+function* deleteTodo(action) {
     try {
         yield delay(1000);
         yield put({
-            type : DELETE_TODO_SUCCESS
+            type : DELETE_TODO_SUCCESS,
+            data : action.data,
         })
     }catch(e) {
         yield put({
