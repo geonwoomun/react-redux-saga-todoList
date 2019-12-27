@@ -6,14 +6,12 @@ export const initialState = {
     {
       id: 1,
       content: "공부하기",
-      isUpdated : false,
-      isDeleted : false,
+      isChange : 0
     },
     {
       id: 2,
       content: "운동하기",
-      isUpdated : false,
-      isDeleted : false,
+      isChange : 0,
     }
   ],
 };
@@ -42,7 +40,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isAddingTodo: false,
         isAdded: true,
-        todo: [...state.todo, {id : state.maxNum + 1, content : action.data, isUpdated:false, isDeleted : false}],
+        todo: [...state.todo, {id : state.maxNum + 1, content : action.data, isChange : false}],
         maxNum : state.maxNum+1
       };
     }
@@ -50,22 +48,15 @@ const reducer = (state = initialState, action) => {
       return state;
     }
     case UPDATE_TODO_REQUEST: {
-      const todo = state.todo.map((t) => {
-        if(t.id == action.data.id){
-          t.isUpdated = true
-        }
-        return t;
-      })
       return {
         ...state,
-        todo
       };
     }
     case UPDATE_TODO_SUCCESS: {
       const todo = state.todo.map(t => {
           if(t.id === action.data.id){
-              t.content = action.data.content,
-              t.isUpdated = false
+              t.content = action.data.content;
+              t.isChange = t.isChange === 0 ? 1 : 0
           };
           return t;
       });
@@ -77,16 +68,9 @@ const reducer = (state = initialState, action) => {
     case UPDATE_TODO_FAILURE: {
       return state;
     }
-    case DELETE_TODO_REQUEST: {
-      const todo = state.todo.map((t) => {
-        if(t.id == action.data){
-          t.isDeleted = true
-        }
-        return t;
-      })
+    case DELETE_TODO_REQUEST: { 
       return {
           ...state,
-          todo
       }
     }
     case DELETE_TODO_SUCCESS: {
