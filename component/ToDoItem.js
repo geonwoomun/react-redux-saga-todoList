@@ -39,9 +39,9 @@ const ToDoItem = ({todo}) => {
       <Input value={content} onChange={contentOnChange}/>}
       <div style={{ display: "flex" }}>
         {!isUpdate ? <><Button style={{ background: "yellowgreen", color: "white" }}
-        onClick={updateOnclick}>
+        onClick={updateOnclick} loading= {todo.isUpdated}>
           수정
-        </Button><Button type="danger" onClick={deleteOnClick} >삭제</Button></> :
+        </Button><Button type="danger" onClick={deleteOnClick} loading={todo.isDeleted} >삭제</Button></> :
         <>
         <Button type = "primary"
         onClick={updateOkOnclick}>

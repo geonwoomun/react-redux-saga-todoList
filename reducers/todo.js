@@ -5,11 +5,15 @@ export const initialState = {
   todo: [
     {
       id: 1,
-      content: "공부하기"
+      content: "공부하기",
+      isUpdated : false,
+      isDeleted : false,
     },
     {
       id: 2,
-      content: "운동하기"
+      content: "운동하기",
+      isUpdated : false,
+      isDeleted : false,
     }
   ],
 };
@@ -38,7 +42,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isAddingTodo: false,
         isAdded: true,
-        todo: [...state.todo, {id : state.maxNum + 1, content : action.data}],
+        todo: [...state.todo, {id : state.maxNum + 1, content : action.data, isUpdated:false, isDeleted : false}],
         maxNum : state.maxNum+1
       };
     }
@@ -46,14 +50,22 @@ const reducer = (state = initialState, action) => {
       return state;
     }
     case UPDATE_TODO_REQUEST: {
+      const todo = state.todo.map((t) => {
+        if(t.id == action.data.id){
+          t.isUpdated = true
+        }
+        return t;
+      })
       return {
-        ...state
+        ...state,
+        todo
       };
     }
     case UPDATE_TODO_SUCCESS: {
       const todo = state.todo.map(t => {
           if(t.id === action.data.id){
-              t.content = action.data.content
+              t.content = action.data.content,
+              t.isUpdated = false
           };
           return t;
       });
@@ -66,8 +78,15 @@ const reducer = (state = initialState, action) => {
       return state;
     }
     case DELETE_TODO_REQUEST: {
+      const todo = state.todo.map((t) => {
+        if(t.id == action.data){
+          t.isDeleted = true
+        }
+        return t;
+      })
       return {
           ...state,
+          todo
       }
     }
     case DELETE_TODO_SUCCESS: {
