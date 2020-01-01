@@ -15,8 +15,13 @@ const ToDoItem = ({todo}) => {
     setIsUpdated(false);
   },[todo.id, todo.isChange]);
   const updateOnclick = useCallback(() => {
+    if(isDid) {
+      alert('이미 완료한 리스트는 수정 할 수 없습니다.');
+      return;
+    }
     setIsUpdate(true);
-  },[])
+  },[isDid]);
+
   const deleteOnClick = useCallback(() => {
     setIsDeleted(true);
     dispatch({
@@ -24,6 +29,7 @@ const ToDoItem = ({todo}) => {
         data : todo.id
     })
   },[todo]);
+
   const contentOnChange = (e) => {
       setContent(e.target.value);
   };
@@ -47,7 +53,7 @@ const ToDoItem = ({todo}) => {
   }, [isDid]);
   return (
     <List.Item style={{ display: "flex", justifyContent: "space-between" }}>
-      {!isUpdate ? <><Typography.Text mark onClick={doOnClick}>{isDid === false ? "Do!" : "Did"}</Typography.Text> {todo.content}</> :
+      {!isUpdate ? <><Typography.Text style = {{textDecoration : isDid ? "line-through" : null }} mark onClick={doOnClick}>{todo.content}</Typography.Text></> :
       <Input value={content} onChange={contentOnChange}/>}
       <div style={{ display: "flex" }}>
         {!isUpdate ? <><Button style={{ background: "yellowgreen", color: "white" }}
