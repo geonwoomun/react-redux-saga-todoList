@@ -1,7 +1,7 @@
 import React , {useState, useCallback, useEffect}from "react";
 import { List, Typography, Button, Input } from 'antd';
 import { useDispatch } from 'react-redux';
-import { DELETE_TODO_REQUEST, UPDATE_TODO_REQUEST } from "../reducers/todo";
+import { deleteTodoRequest, upadteTodoRequest } from "../reducers/todo";
 
 const ToDoItem = ({todo}) => {
   const dispatch = useDispatch();
@@ -24,10 +24,7 @@ const ToDoItem = ({todo}) => {
 
   const deleteOnClick = useCallback(() => {
     setIsDeleted(true);
-    dispatch({
-        type : DELETE_TODO_REQUEST,
-        data : todo.id
-    })
+    dispatch(deleteTodoRequest(todo.id))
   },[todo]);
 
   const contentOnChange = (e) => {
@@ -35,13 +32,7 @@ const ToDoItem = ({todo}) => {
   };
   
   const updateOkOnclick = useCallback(() => {
-        dispatch({
-            type : UPDATE_TODO_REQUEST,
-            data : {
-                id : todo.id,
-                content
-            }
-        }),
+        dispatch(upadteTodoRequest({todoId : todo.id, content}));
         setIsUpdate(false);
         setIsUpdated(true);
   },[content])

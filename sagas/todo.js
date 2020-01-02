@@ -1,20 +1,12 @@
 import { delay, all, fork, takeLatest, put} from 'redux-saga/effects'
-import { ADD_TODO_REQUEST, ADD_TODO_FAILURE, ADD_TODO_SUCCESS, 
-    UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS, UPDATE_TODO_FAILURE,
-DELETE_TODO_FAILURE, DELETE_TODO_REQUEST, DELETE_TODO_SUCCESS } from '../reducers/todo'
+import { ADD_TODO_REQUEST, UPDATE_TODO_REQUEST, DELETE_TODO_REQUEST, addTodoSuccess, addTodoFailure, updateTodoSuccess, updateTodoFailure, deleteTodoRequest, deleteTodoSuccess, deleteTodoFailure } from '../reducers/todo'
 
 function* addTodo(action) {
     try {
         yield delay(1000);
-        yield put({
-            type : ADD_TODO_SUCCESS,
-            data : action.data
-        })
+        yield put(addTodoSuccess({data : action.data}));
     }catch(e) {
-        yield put({
-            type: ADD_TODO_FAILURE,
-            error: e
-        });
+        yield put(addTodoFailure({e}));
         console.error(e)
     }
 }
@@ -25,15 +17,9 @@ function* watchAdd() {
 function* updateTodo(action) {
     try {
         yield delay(1000);
-        yield put({
-            type : UPDATE_TODO_SUCCESS,
-            data : action.data
-        })
+        yield put(updateTodoSuccess({data: action.data}))
     }catch(e) {
-        yield put({
-            type: UPDATE_TODO_FAILURE,
-            error: e
-        });
+        yield put(updateTodoFailure({e}));
         console.error(e)
     }
 }
@@ -44,15 +30,9 @@ function* watchUpdate() {
 function* deleteTodo(action) {
     try {
         yield delay(1000);
-        yield put({
-            type : DELETE_TODO_SUCCESS,
-            data : action.data,
-        })
+        yield put(deleteTodoSuccess({data: action.data}))
     }catch(e) {
-        yield put({
-            type: DELETE_TODO_FAILURE,
-            error: e
-        });
+        yield put(deleteTodoFailure({e}));
         console.error(e)
     }
 }

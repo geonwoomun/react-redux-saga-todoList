@@ -28,6 +28,74 @@ export const DELETE_TODO_REQUEST = "DELTE_TODO_REQUEST";
 export const DELETE_TODO_SUCCESS = "DELTE_TODO_SUCCESS";
 export const DELETE_TODO_FAILURE = "DELTE_TODO_FAILURE";
 
+// 액션 생성함수 추가.
+export const addTodoRequest = (newTodo) => {
+  return {
+    type : ADD_TODO_REQUEST,
+    data : newTodo.trim()
+  };
+};
+
+export const addTodoSuccess = ({data}) => {
+  return {
+    type : ADD_TODO_SUCCESS,
+    data
+  };
+};
+
+export const addTodoFailure = ({e}) => {
+  return {
+    type : ADD_TODO_FAILURE,
+    error : e,
+  }
+}
+
+
+export const deleteTodoRequest = (todoId) => {
+  return {
+    type : DELETE_TODO_REQUEST,
+    data : todoId
+  };
+};
+
+export const deleteTodoSuccess = ({data}) => {
+  return {
+    type : DELETE_TODO_SUCCESS,
+    data,
+  };
+};
+
+export const deleteTodoFailure = ({e}) => {
+  return {
+    type : DELETE_TODO_FAILURE,
+    error : e
+  };
+};
+
+export const upadteTodoRequest = ({todoId, content}) => {
+  return {
+    type : UPDATE_TODO_REQUEST,
+    data : {
+      id : todoId,
+      content
+    }
+  };
+};
+
+export const updateTodoSuccess = ({data}) => {
+  return {
+    type : UPDATE_TODO_SUCCESS,
+    data,
+  };
+};
+
+export const updateTodoFailure = ({e}) => {
+  return {
+    type : UPDATE_TODO_FAILURE,
+    error : e
+  };
+};
+
 // const reducer = (state = initialState, action) => {
 //   switch (action.type) {
 //     case ADD_TODO_REQUEST: {

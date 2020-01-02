@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Form, Input, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_TODO_REQUEST } from "../reducers/todo";
+import { addTodoRequest } from "../reducers/todo";
 
 const InputForm = () => {
   const [newTodo, setNewToDo] = useState("");
@@ -16,10 +16,7 @@ const InputForm = () => {
       if (!newTodo || !newTodo.trim()) {
         return alert("할 일을 적어주세요.");
       }
-      dispatch({
-        type: ADD_TODO_REQUEST,
-        data: newTodo.trim()
-      });
+      dispatch(addTodoRequest(newTodo));
       setNewToDo("");
     },
     [newTodo]
